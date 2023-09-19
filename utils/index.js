@@ -2,8 +2,8 @@ import { cols, rows } from "@/constants/constants";
 
 export const isWinner = (board, player) => {
   // Check horizontally
-  for (let row = 0; row < board.length; row++) {
-    for (let col = 0; col <= board[row].length - 4; col++) {
+  for (let row = 0; row < board?.length; row++) {
+    for (let col = 0; col <= board[row]?.length - 4; col++) {
       if (
         board[row][col] === player &&
         board[row][col + 1] === player &&
@@ -16,8 +16,8 @@ export const isWinner = (board, player) => {
   }
 
   // Check vertically
-  for (let row = 0; row <= board.length - 4; row++) {
-    for (let col = 0; col < board[row].length; col++) {
+  for (let row = 0; row <= board?.length - 4; row++) {
+    for (let col = 0; col < board[row]?.length; col++) {
       if (
         board[row][col] === player &&
         board[row + 1][col] === player &&
@@ -30,8 +30,8 @@ export const isWinner = (board, player) => {
   }
 
   // Check diagonally (top-left to bottom-right)
-  for (let row = 0; row <= board.length - 4; row++) {
-    for (let col = 0; col <= board[row].length - 4; col++) {
+  for (let row = 0; row <= board?.length - 4; row++) {
+    for (let col = 0; col <= board[row]?.length - 4; col++) {
       if (
         board[row][col] === player &&
         board[row + 1][col + 1] === player &&
@@ -44,8 +44,8 @@ export const isWinner = (board, player) => {
   }
 
   // Check diagonally (bottom-left to top-right)
-  for (let row = 3; row < board.length; row++) {
-    for (let col = 0; col <= board[row].length - 4; col++) {
+  for (let row = 3; row < board?.length; row++) {
+    for (let col = 0; col <= board[row]?.length - 4; col++) {
       if (
         board[row][col] === player &&
         board[row - 1][col + 1] === player &&

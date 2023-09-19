@@ -1,13 +1,30 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import CreateLobby from "../components/CreateLobby"
 import JoinLobby from '../components/JoinLobby'
 
+import { useRouter } from "next/navigation"
 
-const Dashboard = () => {
+
+const Dashboard = ( {searchParams}) => {
+
+  const router = useRouter();
+
+  if(searchParams.reload){
+
+    setTimeout(()=>{
+      const baseUrl = window.location.origin + window.location.pathname;
+       window.location.href = baseUrl;
+    },100)
+    
+  }
+
   const [roomId,setRoomId]=useState("")
+ 
+  
+  
   return (
 
     <main className="w-full">
@@ -30,6 +47,8 @@ const Dashboard = () => {
       <JoinLobby 
         roomId={roomId}
       />
+
+      <p className="text-center font-mono mt-10 text-sm text-red-400">Enter new RoomId after each game.</p>
     </main>
   )
 }

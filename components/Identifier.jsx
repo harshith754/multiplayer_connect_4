@@ -2,18 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-const Identifier = (turn,) => {
+const Identifier = (turn) => {
 
-  const [bgColorClass,setBgColorClass] = useState('bg-gray-300');
-
-
-  if (turn === 'red') {
-    setBgColorClass('bg-red-500');
-
-  } else if (turn === 'yellow') {
-    setBgColorClass('bg-yellow-300');
-  }
- 
+  
 
  
 
@@ -23,7 +14,7 @@ const Identifier = (turn,) => {
     
     >
       <div 
-        className={`w-[40px] h-[10px] sm:w-[35px] sm:h-[8px] rounded-xl ${bgColorClass}`}
+        className={`w-[40px] h-[10px] sm:w-[35px] sm:h-[8px] rounded-xl`}
             
       >
         

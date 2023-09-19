@@ -16,13 +16,9 @@ const Game = ({roomId,player}) => {
 
   const [ board, setBoard ] = useState(emptyBoard);
 
-  
-  const clearBoard = () => {
-    setBoard(emptyBoard);
-    setTurn("red")
-  }
 
   useEffect(()=>{
+    console.log("called")
     setBoard(emptyBoard)
 
     pusherClient.subscribe(roomId);
@@ -74,7 +70,8 @@ const Game = ({roomId,player}) => {
       
 
       setTimeout(() => {
-        router.push('/')
+        router.push('/?reload=true');
+
       }, 1000);
       
     }
@@ -84,7 +81,8 @@ const Game = ({roomId,player}) => {
       }, 500);
 
       setTimeout(() => {
-        router.push('/')
+        router.push('/?reload=true');
+
       }, 1000);
     }
 
@@ -152,10 +150,10 @@ const Game = ({roomId,player}) => {
 
 
   return (
-    <main className="w-full text-center">
+    <main className={`w-full text-center`}>
       {`Turn of: ${turn}`}
       <h1 className="text-center font-mono text-5xl mt-10">Connect-4!!</h1>
-      <h3 className="text-center font-sans text-slate-400 text-sm mb-10">created by Harshith ©</h3>
+      <h3 className="text-center font-sans text-slate-400 text-sm mb-10">created by Harshith K©</h3>
 
       <div className='flex flex-col justify-center items-center '>
       
@@ -174,7 +172,7 @@ const Game = ({roomId,player}) => {
         ))}
       </div>
   
-      <div className={`flex justify-center  w-[359px] sm:w-[295px] p-1 rounded-md mt-2 bg-blue-400 grid-cols-${rows} justify-center`}>
+      <div className={`flex justify-center  w-[359px] sm:w-[295px] p-1 rounded-md mt-2 ${turn === 'red' && 'bg-red-400' } ${turn === 'yellow' && 'bg-yellow-300' } grid-cols-${rows} justify-center`}>
         {board.map((col,colIndex) => (
           <Identifier 
             key={`${colIndex}`}
@@ -188,14 +186,7 @@ const Game = ({roomId,player}) => {
           It's {turn }'s turn
         </p>
       </div>
-      <div className='flex justify-center mt-8'>
-        <button 
-          className='bg-red-400 px-10 py-2 rounded-md text-white hover:bg-rose-500 '
-          onClick={clearBoard}
-        >
-          Clear
-        </button>
-      </div>
+      
     </div>
     </main>
   )
