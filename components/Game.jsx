@@ -151,7 +151,7 @@ const Game = ({roomId,player}) => {
 
   return (
     <main className={`w-full text-center`}>
-      {`Turn of: ${turn}`}
+      {`You are colour ${player}.`}
       <h1 className="text-center font-mono text-5xl mt-10">Connect-4!!</h1>
       <h3 className="text-center font-sans text-slate-400 text-sm mb-10">created by Harshith K©</h3>
 

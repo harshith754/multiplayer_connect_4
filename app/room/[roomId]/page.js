@@ -8,13 +8,8 @@ import Game from "@/components/Game";
 const page = ({params}) => {
 
   const {roomId} =params;
-  
   const searchParams = useSearchParams()
- 
   const player = searchParams.get('player')
-
-
-
   const [startGame,setStartGame] = useState(false);
 
   const fstartGame=async ()=>{
