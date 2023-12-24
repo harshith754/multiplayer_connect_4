@@ -1,4 +1,3 @@
-import { pusherServer } from '@/pusher/pusher'
 
 export const POST = async (req) => { 
 

@@ -1,13 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react";
 
-const Identifier = (turn) => {
-
-  
-
- 
-
+const Identifier = () => {
   return (
     
     <div className="w-[50px] h-[20px] sm:w-[40px] sm:h-[15px]  flex justify-center items-center"
