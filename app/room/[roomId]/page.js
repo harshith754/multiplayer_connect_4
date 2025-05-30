@@ -1,7 +1,7 @@
 "use client";
 import { pusherClient } from "@/pusher/pusher";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Game from "@/components/Game";
 import { toast } from "sonner";
 
@@ -11,6 +11,7 @@ const page = ({ params }) => {
   const player = searchParams.get("player");
   const [startGame, setStartGame] = useState(false);
   const [copied, setCopied] = useState(false);
+  const router = useRouter();
 
   const fstartGame = async () => {
     if (startGame) {
@@ -42,12 +43,22 @@ const page = ({ params }) => {
       fstartGame();
     }
 
-    return () => {
+    const cleanup = () => {
       pusherClient.unsubscribe(roomId);
-
       pusherClient.unbind("player-join", (data) => {
         fstartGame();
       });
+    };
+
+    // Listen for route changes
+    const handleRouteChange = () => {
+      cleanup();
+    };
+    router.events?.on?.("routeChangeStart", handleRouteChange);
+
+    return () => {
+      cleanup();
+      router.events?.off?.("routeChangeStart", handleRouteChange);
     };
   }, []);
 

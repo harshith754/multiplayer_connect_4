@@ -13,26 +13,44 @@ const Game = ({ roomId, player }) => {
   const router = useRouter();
 
   const [turn, setTurn] = useState("red");
-  const isTurn = turn === player;
-
   const [board, setBoard] = useState(emptyBoard);
+
+  const isTurn = turn === player;
 
   useEffect(() => {
     setBoard(emptyBoard);
+    setTurn("red");
   }, [roomId, player]);
+
+  const handleOpClick = React.useCallback(
+    (colIndex) => {
+      setBoard((prevBoard) => {
+        const updatedBoard = [...prevBoard];
+        for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
+          if (updatedBoard[rowIndex][colIndex] === "#") {
+            updatedBoard[rowIndex][colIndex] =
+              player === "red" ? "yellow" : "red";
+            break;
+          }
+        }
+        return updatedBoard;
+      });
+      toast.success("Opponent Played!!");
+      setTurn((prev) => (prev === "red" ? "yellow" : "red"));
+    },
+    [player]
+  );
 
   useEffect(() => {
     pusherClient.subscribe(roomId);
 
     if (player === "red") {
       pusherClient.bind("player2move", (data) => {
-        console.log("Recieved message !!");
         const { colIndex } = data;
         handleOpClick(colIndex);
       });
     } else if (player === "yellow") {
       pusherClient.bind("player1move", (data) => {
-        console.log("Recieved message !!");
         const { colIndex } = data;
         handleOpClick(colIndex);
       });
@@ -41,20 +59,12 @@ const Game = ({ roomId, player }) => {
     return () => {
       pusherClient.unsubscribe(roomId);
       if (player === "red") {
-        pusherClient.unbind("player2move", (data) => {
-          console.log("Recieved message !!");
-          const { colIndex } = data;
-          handleOpClick(colIndex);
-        });
+        pusherClient.unbind("player2move");
       } else if (player === "yellow") {
-        pusherClient.unbind("player1move", (data) => {
-          console.log("Recieved message !!");
-          const { colIndex } = data;
-          handleOpClick(colIndex);
-        });
+        pusherClient.unbind("player1move");
       }
     };
-  }, []);
+  }, [roomId, player, handleOpClick]);
 
   useEffect(() => {
     if (isWinner(board, player)) {
@@ -77,29 +87,9 @@ const Game = ({ roomId, player }) => {
     }
   }, [turn]);
 
-  const handleOpClick = (colIndex) => {
-    const updatedBoard = [...board];
-
-    for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
-      if (updatedBoard[rowIndex][colIndex] === "#") {
-        updatedBoard[rowIndex][colIndex] = player === "red" ? "yellow" : "red";
-        break;
-      }
-    }
-
-    setBoard(updatedBoard);
-    toast.success("Opponent Played!!");
-
-    setTurn((prev) => {
-      if (prev === "red") return "yellow";
-      else return "red";
-    });
-  };
-
   const handleMyClick = (colIndex) => {
     if (!isTurn) {
       toast.error("Not your turn!!");
-
       return;
     }
 
