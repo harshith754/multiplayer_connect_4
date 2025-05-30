@@ -18,9 +18,10 @@ const Game = ({ roomId, player }) => {
   const [board, setBoard] = useState(emptyBoard);
 
   useEffect(() => {
-    console.log("called");
     setBoard(emptyBoard);
+  }, [roomId, player]);
 
+  useEffect(() => {
     pusherClient.subscribe(roomId);
 
     if (player === "red") {
