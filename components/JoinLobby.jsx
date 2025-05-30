@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 
-const CreateLobby = ({roomId}) => {
+const JoinLobby = ({roomId}) => {
 
   const router = useRouter()
 
@@ -20,7 +20,7 @@ const CreateLobby = ({roomId}) => {
   return (
     <div className="flex justify-center">
         <button 
-          className='bg-blue-500 mt-5 px-10 py-2 rounded-md text-white hover:bg-blue-600 '
+          className='bg-blue-500 m-t-5 px-10 py-2 rounded-md text-white hover:bg-blue-600 '
           onClick={handleEnter}
         >
           Join Lobby
@@ -29,4 +29,4 @@ const CreateLobby = ({roomId}) => {
   )
 }
 
-export default CreateLobby
+export default JoinLobby
